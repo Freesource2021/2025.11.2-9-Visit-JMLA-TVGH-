@@ -1,9 +1,9 @@
 
 import React from 'react';
-import type { TravelSegmentItem } from '../types';
-import TrainIcon from './icons/TrainIcon';
-import WalkIcon from './icons/WalkIcon';
-import LandmarkIcon from './icons/LandmarkIcon';
+import type { TravelSegmentItem } from '../types.ts';
+import TrainIcon from './icons/TrainIcon.tsx';
+import WalkIcon from './icons/WalkIcon.tsx';
+import LandmarkIcon from './icons/LandmarkIcon.tsx';
 
 interface TravelSegmentProps {
   item: TravelSegmentItem;

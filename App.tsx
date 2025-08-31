@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
-import { ItineraryItem } from './types';
-import Header from './components/Header';
-import ScheduleCard from './components/ScheduleCard';
-import TravelSegment from './components/TravelSegment';
+import { ItineraryItem } from './types.ts';
+import Header from './components/Header.tsx';
+import ScheduleCard from './components/ScheduleCard.tsx';
+import TravelSegment from './components/TravelSegment.tsx';
+import FilterControls from './components/FilterControls.tsx';
 
 const initialItineraryData: ItineraryItem[] = [
   {
@@ -265,6 +266,7 @@ const initialItineraryData: ItineraryItem[] = [
 
 const App: React.FC = () => {
   const [itineraryData, setItineraryData] = useState(initialItineraryData);
+  const [selectedDate, setSelectedDate] = useState('all');
 
   const handleToggleStar = (id: number) => {
     setItineraryData(prevData =>
@@ -276,13 +278,41 @@ const App: React.FC = () => {
       })
     );
   };
+  
+  const uniqueDates = [...new Set(
+    initialItineraryData
+      .filter((item): item is Extract<ItineraryItem, { type: 'event' }> => item.type === 'event')
+      .map(item => item.date)
+  )];
+
+  const filteredItinerary = selectedDate === 'all'
+    ? itineraryData
+    : itineraryData.filter((item, index, allItems) => {
+        if (item.type === 'event') {
+          return item.date === selectedDate;
+        }
+        if (item.type === 'travel') {
+          const nextItem = allItems[index + 1];
+          if (nextItem && nextItem.type === 'event') {
+            return nextItem.date === selectedDate;
+          }
+        }
+        return false;
+      });
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans">
       <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
         <Header />
+        <div className="mt-8">
+          <FilterControls
+            dates={uniqueDates}
+            selectedDate={selectedDate}
+            onSelectDate={setSelectedDate}
+          />
+        </div>
         <div className="mt-10 space-y-8">
-          {itineraryData.map((item) => {
+          {filteredItinerary.map((item) => {
             if (item.type === 'travel') {
               return <TravelSegment key={item.id} item={item} />;
             }

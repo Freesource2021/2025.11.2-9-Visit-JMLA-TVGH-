@@ -1,7 +1,6 @@
-
 import React from 'react';
-import type { ScheduleItem } from '../types';
-import StarIcon from './icons/StarIcon';
+import type { ScheduleItem } from '../types.ts';
+import StarIcon from './icons/StarIcon.tsx';
 
 interface ScheduleCardProps {
   item: ScheduleItem;
@@ -29,7 +28,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({ item, onToggleStar }) => {
     <>
       <div className={`
         flex-shrink-0 p-4 md:p-6 md:w-40 text-white 
-        flex md:flex-col items-center justify-center 
+        flex items-center justify-between md:flex-col md:justify-center 
         ${dateBgColor}
       `}>
         <div className="text-center">
@@ -39,14 +38,14 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({ item, onToggleStar }) => {
                 <span className="text-base opacity-80 ml-1">({item.day.ja})</span>
             </p>
         </div>
-        <div className="ml-6 md:ml-0 md:mt-4 px-3 py-1 bg-white/20 rounded-full text-sm font-semibold">
+        <div className="md:mt-4 px-3 py-1 bg-white/20 rounded-full text-sm font-semibold">
           {item.time}
         </div>
       </div>
       <div className="p-6 md:p-8 flex-grow">
         <div className="flex justify-between items-start gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight">
               {item.title}
               {item.originalTitle && (
                 <span className="ml-2 text-lg font-medium text-slate-500 dark:text-slate-400">
