@@ -1,0 +1,5 @@
+{
+  "name": "JMLA 參訪行程",
+  "description": "一個用於顯示2025年11月4日至7日JMLA參訪行程的網頁應用程式。它以乾淨、易讀且視覺上吸引人的卡片格式呈現時間表。",
+  "requestFramePermissions": []
+}
