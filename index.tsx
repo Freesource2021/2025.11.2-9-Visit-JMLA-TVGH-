@@ -28,7 +28,7 @@ interface TravelSegmentItem {
   id: string;
   duration: {
     zh: string;
-    ja: string;
+    ja:string;
   };
   method: 'subway' | 'walk';
   description: {
@@ -171,9 +171,52 @@ const LandmarkIcon: React.FC = () => {
   );
 };
 
+// --- NEW SearchIcon Component ---
+const SearchIcon: React.FC = () => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    className="h-5 w-5 text-slate-400" 
+    viewBox="0 0 20 20" 
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path 
+      fillRule="evenodd" 
+      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" 
+      clipRule="evenodd" 
+    />
+  </svg>
+);
+
+// --- NEW HighlightText Component ---
+const HighlightText: React.FC<{ text: string; highlight: string }> = ({ text, highlight }) => {
+  if (!highlight.trim()) {
+    return <>{text}</>;
+  }
+  const regex = new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  const parts = text.split(regex);
+  return (
+    <>
+      {parts.map((part, i) =>
+        regex.test(part) ? (
+          <mark key={i} className="bg-yellow-200 dark:bg-yellow-500/70 text-slate-900 dark:text-slate-900 rounded px-0.5 py-0.5">
+            {part}
+          </mark>
+        ) : (
+          part
+        )
+      )}
+    </>
+  );
+};
 
 // --- FROM components/Header.tsx ---
-const Header: React.FC = () => {
+interface HeaderProps {
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange }) => {
   return (
     <header className="text-center border-b-2 border-slate-200 dark:border-slate-700 pb-6">
       <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
@@ -188,6 +231,24 @@ const Header: React.FC = () => {
           2025年11月4日 - 7日 (*英語での解説あり)
         </span>
       </p>
+       <div className="mt-6 max-w-lg mx-auto">
+          <label htmlFor="search" className="sr-only">搜尋行程</label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <SearchIcon />
+            </div>
+            <input
+              type="search"
+              name="search"
+              id="search"
+              className="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md leading-5 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:placeholder-slate-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="搜尋標題或描述..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              aria-label="搜尋行程內容"
+            />
+          </div>
+        </div>
     </header>
   );
 };
@@ -210,7 +271,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({ dates, selectedDate, on
   };
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8">
+    <div className="flex flex-wrap justify-center gap-2 md:gap-3 my-8">
       {allDates.map((date) => {
         const isActive = selectedDate === date;
         const buttonClasses = `
@@ -241,6 +302,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({ dates, selectedDate, on
 // --- FROM components/TravelSegment.tsx ---
 interface TravelSegmentProps {
   item: TravelSegmentItem;
+  highlightQuery: string;
 }
 
 const methodTextMap = {
@@ -248,7 +310,7 @@ const methodTextMap = {
   walk: { zh: '步行', ja: '徒歩' },
 };
 
-const TravelSegment: React.FC<TravelSegmentProps> = ({ item }) => {
+const TravelSegment: React.FC<TravelSegmentProps> = ({ item, highlightQuery }) => {
   const Icon = item.method === 'subway' ? TrainIcon : WalkIcon;
   const MethodText = methodTextMap[item.method];
 
@@ -271,8 +333,8 @@ const TravelSegment: React.FC<TravelSegmentProps> = ({ item }) => {
               </span>
             </p>
             <div className="text-xs text-slate-400 dark:text-slate-500">
-              <p>{item.description.zh}</p>
-              <p>{item.description.ja}</p>
+              <p><HighlightText text={item.description.zh} highlight={highlightQuery} /></p>
+              <p><HighlightText text={item.description.ja} highlight={highlightQuery} /></p>
             </div>
           </div>
         </div>
@@ -333,9 +395,10 @@ const TravelSegment: React.FC<TravelSegmentProps> = ({ item }) => {
 interface ScheduleCardProps {
   item: ScheduleItem;
   onToggleStar: (id: number) => void;
+  highlightQuery: string;
 }
 
-const ScheduleCard: React.FC<ScheduleCardProps> = ({ item, onToggleStar }) => {
+const ScheduleCard: React.FC<ScheduleCardProps> = ({ item, onToggleStar, highlightQuery }) => {
   const dateBgColor =
     item.day.zh === '週二' ? 'bg-teal-600' :
     item.day.zh === '週三' ? 'bg-blue-600' :
@@ -374,10 +437,10 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({ item, onToggleStar }) => {
         <div className="flex justify-between items-start gap-4">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight">
-              {item.title}
+              <HighlightText text={item.title} highlight={highlightQuery} />
               {item.originalTitle && (
                 <span className="ml-2 text-lg font-medium text-slate-500 dark:text-slate-400">
-                  ({item.originalTitle})
+                  (<HighlightText text={item.originalTitle} highlight={highlightQuery} />)
                 </span>
               )}
             </h2>
@@ -401,8 +464,8 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({ item, onToggleStar }) => {
           mt-3 text-base leading-relaxed 
           ${item.isPlaceholder ? 'italic text-slate-500 dark:text-slate-400' : 'text-slate-600 dark:text-slate-300'}
         `}>
-          <p>{item.description.zh}</p>
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{item.description.ja}</p>
+          <p><HighlightText text={item.description.zh} highlight={highlightQuery} /></p>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400"><HighlightText text={item.description.ja} highlight={highlightQuery} /></p>
         </div>
       </div>
     </>
@@ -692,6 +755,7 @@ const initialItineraryData: ItineraryItem[] = [
 const App: React.FC = () => {
   const [itineraryData, setItineraryData] = useState(initialItineraryData);
   const [selectedDate, setSelectedDate] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleToggleStar = (id: number) => {
     setItineraryData(prevData =>
@@ -710,38 +774,80 @@ const App: React.FC = () => {
       .map(item => item.date)
   )];
 
-  const filteredItinerary = selectedDate === 'all'
-    ? itineraryData
-    : itineraryData.filter((item, index, allItems) => {
-        if (item.type === 'event') {
-          return item.date === selectedDate;
-        }
-        if (item.type === 'travel') {
-          const nextItem = allItems[index + 1];
-          if (nextItem && nextItem.type === 'event') {
-            return nextItem.date === selectedDate;
+  const finalItinerary = (() => {
+    // 1. Filter by date
+    const dateFiltered = selectedDate === 'all'
+      ? itineraryData
+      : itineraryData.filter((item, index, allItems) => {
+          if (item.type === 'event') {
+            return item.date === selectedDate;
+          }
+          if (item.type === 'travel') {
+            const nextItem = allItems[index + 1];
+            if (nextItem && nextItem.type === 'event') {
+              return nextItem.date === selectedDate;
+            }
+          }
+          return false;
+        });
+
+    // 2. Filter by search query
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) {
+      return dateFiltered;
+    }
+
+    const matchingIndices = new Set<number>();
+    dateFiltered.forEach((item, index) => {
+      let isMatch = false;
+      if (item.type === 'event') {
+        isMatch =
+          item.title.toLowerCase().includes(query) ||
+          item.originalTitle.toLowerCase().includes(query) ||
+          item.description.zh.toLowerCase().includes(query) ||
+          item.description.ja.toLowerCase().includes(query);
+      } else if (item.type === 'travel') {
+        isMatch =
+          item.description.zh.toLowerCase().includes(query) ||
+          item.description.ja.toLowerCase().includes(query);
+      }
+
+      if (isMatch) {
+        matchingIndices.add(index);
+        // If the match is an event, also include the preceding travel segment for context
+        if (item.type === 'event' && index > 0) {
+          const prevItem = dateFiltered[index - 1];
+          if (prevItem.type === 'travel') {
+            matchingIndices.add(index - 1);
           }
         }
-        return false;
-      });
+      }
+    });
+
+    return dateFiltered.filter((_, index) => matchingIndices.has(index));
+  })();
+
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans">
       <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
-        <Header />
-        <div className="mt-8">
+        <Header 
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
+        <div>
           <FilterControls
             dates={uniqueDates}
             selectedDate={selectedDate}
             onSelectDate={setSelectedDate}
           />
         </div>
-        <div className="mt-10 space-y-8">
-          {filteredItinerary.map((item) => {
+        <div className="mt-2 space-y-8">
+          {finalItinerary.map((item) => {
             if (item.type === 'travel') {
-              return <TravelSegment key={item.id} item={item} />;
+              return <TravelSegment key={item.id} item={item} highlightQuery={searchQuery} />;
             }
-            return <ScheduleCard key={item.id} item={item} onToggleStar={handleToggleStar} />;
+            return <ScheduleCard key={item.id} item={item} onToggleStar={handleToggleStar} highlightQuery={searchQuery} />;
           })}
         </div>
       </main>
