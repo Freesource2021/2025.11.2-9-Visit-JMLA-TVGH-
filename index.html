@@ -1,7 +1,4 @@
-# This script generates a simplified HTML file with pure JavaScript instead of TypeScript/TSX
-# It assumes that the original React components are replaced with basic DOM manipulation
-
-html_content = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
@@ -21,30 +18,21 @@ html_content = """<!DOCTYPE html>
         }
       }
     </script>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19",
+    "react-dom/client": "https://esm.sh/react-dom@19/client",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/"
+  }
+}
+</script>
   </head>
   <body class="bg-slate-50 dark:bg-slate-900">
-    <div id="root" class="p-4 text-brand-dark">
-      <h1 class="text-2xl font-bold mb-4">JMLA 參訪行程</h1>
-      <ul class="list-disc pl-5">
-        <li>日期：2025年11月4日至7日</li>
-        <li>地點：JMLA 會議中心</li>
-        <li>活動：參訪、交流、演講</li>
-      </ul>
-    </div>
-    <script>
-      // Pure JavaScript example to dynamically add content
-      const root = document.getElementById("root");
-      const note = document.createElement("p");
-      note.textContent = "歡迎參加 JMLA 活動！請查看上方行程資訊。";
-      note.className = "mt-4 text-brand-blue";
-      root.appendChild(note);
-    </script>
+    <div id="root"></div>
+    <!-- Babel for on-the-fly TSX/JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+    <script type="text/babel" data-presets="react,typescript" data-type="module" src="./index.tsx"></script>
   </body>
 </html>
-"""
-
-# Save the HTML content to a file
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
-
-print("已成功產生純 JavaScript 的 index.html，可直接部署至 GitHub Pages。")

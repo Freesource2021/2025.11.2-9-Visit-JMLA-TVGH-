@@ -10,16 +10,6 @@
   },
   "dependencies": {
     "react": "^19.1.1",
-    "./App.tsx": "latest",
-    "./types.ts": "latest",
-    "./components/Header.tsx": "latest",
-    "./components/ScheduleCard.tsx": "latest",
-    "./components/TravelSegment.tsx": "latest",
-    "./components/FilterControls.tsx": "latest",
-    "./components/icons/StarIcon.tsx": "latest",
-    "./components/icons/TrainIcon.tsx": "latest",
-    "./components/icons/WalkIcon.tsx": "latest",
-    "./components/icons/LandmarkIcon.tsx": "latest",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
