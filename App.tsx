@@ -31,6 +31,10 @@ const initialItineraryData: ItineraryItem[] = [
       ja: '銀座エリアから聖路加国際大学へ',
     },
     mapUrl: 'https://www.google.com/maps/dir/Ginza,+Chuo+City,+Tokyo,+Japan/St.+Luke\'s+International+University,+Akashicho,+Chuo+City,+Tokyo,+Japan',
+    landmarks: [
+        { zh: '歌舞伎座', ja: '歌舞伎座', time: { zh: '約 4 分', ja: '約 4 分' } },
+        { zh: '築地本願寺', ja: '築地本願寺', time: { zh: '約 6 分', ja: '約 6 分' } },
+    ],
   },
   {
     type: 'event',
@@ -58,6 +62,12 @@ const initialItineraryData: ItineraryItem[] = [
       ja: '銀座築地駅から東京大学（本郷キャンパス）へ',
     },
     mapUrl: 'https://www.google.com/maps/dir/Tsukiji+Station,+Tokyo,+Japan/The+University+of+Tokyo,+Hongo,+Bunkyo+City,+Tokyo,+Japan',
+    stops: [
+        { zh: '築地', ja: '築地' },
+        { zh: '銀座', ja: '銀座' },
+        { zh: '霞關', ja: '霞ケ関' },
+        { zh: '本鄉三丁目', ja: '本郷三丁目' },
+    ],
   },
   {
     type: 'event',
@@ -101,6 +111,11 @@ const initialItineraryData: ItineraryItem[] = [
       ja: '東京大学本郷キャンパス内を歩いて総合図書館へ',
     },
     mapUrl: 'https://www.google.com/maps/dir/University+of+Tokyo+Medical+Library/The+University+of+Tokyo+General+Library,+Hongo,+Bunkyo+City,+Tokyo,+Japan',
+    landmarks: [
+        { zh: '赤門', ja: '赤門', time: { zh: '約 3 分', ja: '約 3 分' } },
+        { zh: '安田講堂', ja: '安田講堂', time: { zh: '約 4 分', ja: '約 4 分' } },
+        { zh: '三四郎池', ja: '三四郎池', time: { zh: '約 3 分', ja: '約 3 分' } },
+    ],
   },
   {
     type: 'event',
@@ -128,6 +143,11 @@ const initialItineraryData: ItineraryItem[] = [
       ja: '銀座築地駅から国際子ども図書館へ',
     },
     mapUrl: 'https://www.google.com/maps/dir/Tsukiji+Station,+Tokyo,+Japan/International+Library+of+Children\'s+Literature,+Uenokoen,+Taito+City,+Tokyo,+Japan',
+    stops: [
+        { zh: '築地', ja: '築地' },
+        { zh: '秋葉原', ja: '秋葉原' },
+        { zh: '上野', ja: '上野' },
+    ],
   },
   {
     type: 'event',
@@ -155,6 +175,11 @@ const initialItineraryData: ItineraryItem[] = [
       ja: '国際子ども図書館から東京慈恵会医科大学へ',
     },
     mapUrl: 'https://www.google.com/maps/dir/International+Library+of+Children\'s+Literature,+Uenokoen,+Taito+City,+Tokyo,+Japan/The+Jikei+University+School+of+Medicine,+Nishishinbashi,+Minato+City,+Tokyo,+Japan',
+    stops: [
+        { zh: '上野', ja: '上野' },
+        { zh: '銀座', ja: '銀座' },
+        { zh: '神谷町', ja: '神谷町' },
+    ],
   },
   {
     type: 'event',
@@ -182,6 +207,11 @@ const initialItineraryData: ItineraryItem[] = [
       ja: '銀座築地駅から国立国会図書館へ',
     },
     mapUrl: 'https://www.google.com/maps/dir/Tsukiji+Station,+Tokyo,+Japan/National+Diet+Library,+Nagatacho,+Chiyoda+City,+Tokyo,+Japan',
+    stops: [
+        { zh: '築地', ja: '築地' },
+        { zh: '霞關', ja: '霞ケ関' },
+        { zh: '國會議事堂前', ja: '国会議事堂前' },
+    ],
   },
   {
     type: 'event',
@@ -205,10 +235,15 @@ const initialItineraryData: ItineraryItem[] = [
     duration: { zh: '約 30 分鐘', ja: '約 30 分' },
     method: 'subway',
     description: {
-      zh: '從國立國會圖書館前往早稻田大學國際文學館',
-      ja: '国立国会図書館から早稲田大学国際文学館へ',
+      zh: '從國會圖書館(永田町站)前往早稻田大學',
+      ja: '国会図書館(永田町駅)から早稲田大学へ',
     },
     mapUrl: 'https://www.google.com/maps/dir/National+Diet+Library,+Nagatacho,+Chiyoda+City,+Tokyo,+Japan/The+Waseda+International+House+of+Literature+(The+Haruki+Murakami+Library),+Nishiwaseda,+Shinjuku+City,+Tokyo,+Japan',
+    stops: [
+        { zh: '永田町', ja: '永田町' },
+        { zh: '飯田橋', ja: '飯田橋' },
+        { zh: '早稻田', ja: '早稲田' },
+    ],
   },
   {
     type: 'event',

@@ -32,6 +32,18 @@ export interface TravelSegmentItem {
     ja: string;
   };
   mapUrl: string;
+  stops?: {
+    zh: string;
+    ja: string;
+  }[];
+  landmarks?: {
+    zh: string;
+    ja: string;
+    time: {
+      zh: string;
+      ja: string;
+    };
+  }[];
 }
 
 export type ItineraryItem = ScheduleItem | TravelSegmentItem;
