@@ -1756,7 +1756,9 @@ const App: React.FC = () => {
     itineraryData
       .filter((item): item is Extract<ItineraryItem, { type: 'event' }> => item.type === 'event')
       .map(item => item.date)
-  )].sort((a, b) => {
+  )]
+  // Fix: Explicitly type `a` and `b` as strings to resolve TypeScript inference issue where they were being treated as `unknown`.
+  .sort((a: string, b: string) => {
     const [monthA, dayA] = a.split('/').map(Number);
     const [monthB, dayB] = b.split('/').map(Number);
     if (monthA !== monthB) {
@@ -1845,6 +1847,22 @@ const App: React.FC = () => {
           onAddItem={handleAddItemToEnd}
         />
         <div>
+          <div className="text-center">
+            <a
+              href="https://tabelog.com/tw/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-base font-semibold text-white bg-orange-500 rounded-full hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 dark:focus:ring-offset-slate-900 transition-all duration-200 hover:shadow-lg active:scale-95"
+              aria-label="前往 Tabelog 餐廳網站"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
+                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+                <path d="M7 2v20"/>
+                <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z"/>
+              </svg>
+              <span>Tabelog餐廳</span>
+            </a>
+          </div>
           <FilterControls
             dates={uniqueDates}
             selectedDate={selectedDate}
