@@ -55,6 +55,33 @@ const initialItineraryData: ItineraryItem[] = [
   },
   {
     type: 'travel',
+    id: 'travel-to-10',
+    duration: { zh: '約 10 分鐘', ja: '約 10 分' },
+    method: 'walk',
+    description: {
+      zh: '從聖路加國際大學步行前往歌舞伎座',
+      ja: '聖路加国際大学から歌舞伎座まで徒歩',
+    },
+    mapUrl: 'https://www.google.com/maps/dir/St.+Luke\'s+International+University,+Akashicho,+Chuo+City,+Tokyo,+Japan/Kabuki-za+Theatre,+4-chōme-12-15+Ginza,+Chuo+City,+Tokyo+104-0061,+Japan/',
+  },
+  {
+    type: 'event',
+    id: 10,
+    date: '11/4',
+    day: { zh: '週二', ja: '火' },
+    time: '晚上',
+    title: '歌舞伎座表演',
+    originalTitle: '歌舞伎座',
+    description: {
+      zh: '歌舞伎座是東京最主要的傳統歌舞伎表演劇場。體驗日本古典戲劇的精髓，欣賞華麗的服裝、戲劇性的化妝和獨特的舞台表演。',
+      ja: '歌舞伎座は、東京で最も主要な伝統的な歌舞伎の劇場です。華やかな衣装、ドラマチックな化粧、そしてユニークな舞台演出で、日本の古典演劇の真髄を体験してください。',
+    },
+    isStarred: true,
+    isPlaceholder: false,
+    websiteUrl: 'https://www.kabuki-za.co.jp/',
+  },
+  {
+    type: 'travel',
     id: 'travel-to-3',
     duration: { zh: '約 30 分鐘', ja: '約 30 分' },
     method: 'subway',

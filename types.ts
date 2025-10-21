@@ -7,7 +7,7 @@ export interface ScheduleItem {
     zh: string;
     ja: string;
   };
-  time: '上午' | '下午';
+  time: '上午' | '下午' | '晚上';
   title: string;
   originalTitle: string;
   description: {
